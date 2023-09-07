@@ -41,13 +41,14 @@ int main( int argc, char** argv )
     String* needle = makeString( argArr[ 2 ] );
     free( rawData );
 
-    // outString( data );
-    // printf( "\n" );
-    // outString( word );
-    // printf( "\n" );
-
     int pos = findSubstring( haystack, needle, 0 );
 
+    // free the two strings made after we're done using them
+    freeString( haystack );
+    freeString( needle );
+
+    // output the index of the first instance of the substring in the text read in, or
+    // -1 if no such instance exists
     printf( "%d\n", pos );
 
     // exit the program

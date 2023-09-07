@@ -5,12 +5,6 @@
 
 #include "strings.h"
 
-int length( String const* str )
-{
-    // return the length stored in the String struct
-    return str->len;
-}
-
 String* makeString( char const* lit )
 {
     // fetch the length of the byte literal for initialization, and 

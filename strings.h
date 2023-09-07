@@ -9,8 +9,6 @@ typedef struct {
     int len;
 } String;
 
-int length( String const* str );
-
 String* makeString( char const* lit );
 
 void freeString( String* str );

@@ -45,8 +45,8 @@ int findSubstring( String const* str, String const* subs, int pos )
 {
 
     // fetch the string and substring lengths
-    int slen = length( str );
-    int sslen = length( subs );
+    int slen = str->len;
+    int sslen = subs->len;
 
     // initialize an array to hold prefix table values for the substring
     int pvals[ sslen ];
