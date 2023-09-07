@@ -1,9 +1,9 @@
 
-#ifndef SS_STRSEARCH_H
-#define SS_STRSEARCH_H
+#ifndef STRSEARCH_H
+#define STRSEARCH_H
 
 #include "strings.h"
 
-int getSubstring( String const* str, String const* subs );
+int findSubstring( String const* str, String const* subs, int pos );
 
 #endif

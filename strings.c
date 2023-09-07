@@ -1,4 +1,5 @@
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -17,13 +18,18 @@ String* makeString( char const* lit )
     int len = strlen( lit );
     String* str = ( String* ) malloc( sizeof( String ) );
 
+    if ( str == NULL )
+        fprintf( stderr, "Error: could not allocate string memory!" );
+
     // allocate heap memory for the array of bytes which will comprise the string
     str->bytes = ( char* ) malloc( len * sizeof( char ) );
 
-    // run through each byte allocated and set to the corresponding character in
-    // the string literal passed
-    for ( int i = 0; i < len; i++ )
-        str->bytes[ i ] = lit[ i ];
+    if ( str->bytes == NULL )
+        fprintf( stderr, "Error: could not allocate byte array memory!");
+
+    // use memcpy() to copy the correct number of bytes over to the byte array
+    // from the literal passed
+    memcpy( str->bytes, lit, len );
 
     // set the byte length in the String struct
     str->len = len;
@@ -32,14 +38,14 @@ String* makeString( char const* lit )
     return str;
 }
 
-String* remakeString( String* str, char const* lit )
-{
-    // free all of the memory associated with the String pointer passed
-    freeString( str );
+// String* remakeString( String* str, char const* lit )
+// {
+//     // free all of the memory associated with the String pointer passed
+//     freeString( str );
 
-    // return the address of new String struct made with the literal passed
-    return makeString( lit );
-}
+//     // return the address of new String struct made with the literal passed
+//     return makeString( lit );
+// }
 
 void freeString( String* str )
 {
@@ -48,3 +54,10 @@ void freeString( String* str )
     free( str->bytes );
     free( str );
 }
+
+// void outString( String const* str )
+// {
+//     int len = length( str );
+//     for ( int i = 0; i < len; i++ )
+//         putchar( str->bytes[ i ] );
+// }

@@ -1,6 +1,6 @@
 
-#ifndef SS_STRINGS_H
-#define SS_STRINGS_H
+#ifndef STRINGS_H
+#define STRINGS_H
 
 typedef struct {
     /** the array of bytes used in the string */
@@ -13,8 +13,10 @@ int length( String const* str );
 
 String* makeString( char const* lit );
 
-String* remakeString( String* str, char const* lit );
+// String* remakeString( String* str, char const* lit );
 
 void freeString( String* str );
+
+// void outString( String const* str );
 
 #endif
