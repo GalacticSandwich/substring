@@ -13,10 +13,6 @@ int length( String const* str );
 
 String* makeString( char const* lit );
 
-// String* remakeString( String* str, char const* lit );
-
 void freeString( String* str );
-
-// void outString( String const* str );
 
 #endif

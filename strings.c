@@ -38,15 +38,6 @@ String* makeString( char const* lit )
     return str;
 }
 
-// String* remakeString( String* str, char const* lit )
-// {
-//     // free all of the memory associated with the String pointer passed
-//     freeString( str );
-
-//     // return the address of new String struct made with the literal passed
-//     return makeString( lit );
-// }
-
 void freeString( String* str )
 {
     // use free() from the standard library to free the heap memory
@@ -54,10 +45,3 @@ void freeString( String* str )
     free( str->bytes );
     free( str );
 }
-
-// void outString( String const* str )
-// {
-//     int len = length( str );
-//     for ( int i = 0; i < len; i++ )
-//         putchar( str->bytes[ i ] );
-// }
