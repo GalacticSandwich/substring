@@ -1,3 +1,5 @@
 *.txt
 *.o
 substring-kmp
+substring-bm
+substring-rk
