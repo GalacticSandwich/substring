@@ -1,3 +1,12 @@
+/**
+    @file strsearch-kmp.c
+    @author Aaron N. (GalacticSandwich)
+
+    Contains a definition for substring searches, defined using the
+    Knuth-Morris-Pratt Algorithm, which uses a generated table, called a 
+    Prefix Table, to generate shift factors when a mismatch is found in
+    the brute-force approach.
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -5,6 +14,15 @@
 #include "strings.h"
 #include "strsearch.h"
 
+/**
+    Initializes the prefix table, containing the shift factors for
+    the substring when comparing in the superstring to find
+    matches.
+
+    @param subs the substring to use in the generation of the table
+    @param arr the integer array to populate with shift values
+    @param len the length of the substring/integer array
+*/
 static void buildPrefixTable( String const* subs, int* arr, int len )
 {
     // the first prefix value is always zero

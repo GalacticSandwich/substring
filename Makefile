@@ -1,8 +1,8 @@
 
-all: substring-kmp
+all: subs-kmp
 
-substring-kmp: substring.o strsearch-kmp.o strings.o
-	gcc -Wall -std=c99 substring.o strsearch-kmp.o strings.o -o substring-kmp
+subs-kmp: substring.o strsearch-kmp.o strings.o
+	gcc -Wall -std=c99 substring.o strsearch-kmp.o strings.o -o subs-kmp
 
 substring.o: substring.c strsearch.h strings.h
 	gcc -Wall -std=c99 -g substring.c -c
@@ -14,4 +14,4 @@ strings.o: strings.c strings.h
 	gcc -Wall -std=c99 -g strings.c -c
 
 clean:
-	rm -f *.o substring-kmp
+	rm -f *.o subs-kmp

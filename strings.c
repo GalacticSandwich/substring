@@ -1,3 +1,11 @@
+/**
+    @file strings.c
+    @author Aaron N. (GalacticSandwich)
+
+    Contains the definitions for functions needed to work with the custom String
+    definition, notably for building the struct-type using a string-literal, or
+    freeing memory associated with a String.
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
