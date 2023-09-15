@@ -49,13 +49,17 @@ static char* readFile( char const* fileName ) {
     return data;
 }
 
+// static int evalArgs( int numArgs, char** argArr, unsigned char* flags ) {
+
+// }
+
 /**
     Prints out the template for program usage
 
     @param progName the name of the program to display
 */
 static void usage( char const* progName ) {
-    printf( "usage: %s <file> <string> <flags>\n", progName );
+    printf( "usage: %s <file> <string>\n", progName );
 }
 
 /**
@@ -69,21 +73,18 @@ static void usage( char const* progName ) {
 */
 int main( int argc, char** argv )
 {
-    int numArgs = argc;
-    char** argArr = argv;
-
-    if ( numArgs < 3 ) {
-        usage( argArr[ 0 ] );
+    if ( argc < 3 ) {
+        usage( argv[ 0 ] );
         return EXIT_FAILURE;
     }
 
     // read in the input file
-    char* data = readFile( argArr[ 1 ] );
+    char* data = readFile( argv[ 1 ] );
 
     // construct a string for the text and pattern using the created text string
     // and the word to search for passed in through the command line
     String* haystack = makeString( data );
-    String* needle = makeString( argArr[ 2 ] );
+    String* needle = makeString( argv[ 2 ] );
     free( data );
 
     // perform a substring search

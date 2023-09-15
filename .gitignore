@@ -1,5 +1,5 @@
-*.txt
 *.o
 subs-kmp
 subs-bm
 subs-rk
+*.txt
