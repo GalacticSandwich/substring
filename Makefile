@@ -14,4 +14,4 @@ strings.o: strings.c strings.h
 	gcc -Wall -std=c99 -g strings.c -c
 
 clean:
-	rm -f *.o subs-kmp
+	rm -f *.o
