@@ -159,14 +159,18 @@ int main( int argc, char** argv )
             }
         }
         else if ( operation == OP_SEARCHALL ) {
+            // perform a substring search
             int pos = findSubstring( haystack, needle, 0 );
 
+            // output the index of the first instance of the substring in the text read in, or
+            // an appropriate message if no such instance exists
             if ( pos == -1 ) {
                 printf( "[substring] searchall: No substrings found in %s\n", argv[ 2 ] );
             }
             else {
                 printf( "[substring] searchall: Substring found in %s at index %d\n", argv[ 2 ], pos );
 
+                // search for more substrings if they exist
                 while ( ( pos = findSubstring( haystack, needle, pos + 1 ) ) != -1 ) {
                     printf( "[substring] searchall: Substring found in %s at index %d\n", argv[ 2 ], pos );
                 }
