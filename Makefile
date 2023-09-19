@@ -1,17 +1,21 @@
 
+CC := gcc
+CFLAGS := -std=c99 -Wall -O2
+OFLAGS := -g
+
 all: subs-kmp clean
 
 subs-kmp: substring.o strsearch-kmp.o strings.o
-	gcc -O2 -Wall -std=c99 substring.o strsearch-kmp.o strings.o -o subs-kmp
+	$(CC) $(CFLAGS) substring.o strsearch-kmp.o strings.o -o subs-kmp
 
 substring.o: substring.c strsearch.h strings.h
-	gcc -O2 -Wall -std=c99 -g substring.c -c
+	$(CC) $(CFLAGS) $(OFLAGS) substring.c -c
 
 strsearch-kmp.o: strsearch-kmp.c strsearch.h strings.h
-	gcc -O2 -Wall -std=c99 -g strsearch-kmp.c -c
+	$(CC) $(CFLAGS) $(OFLAGS) strsearch-kmp.c -c
 
 strings.o: strings.c strings.h
-	gcc -O2 -Wall -std=c99 -g strings.c -c
+	$(CC) $(CFLAGS) $(OFLAGS) strings.c -c
 
 clean:
 	rm -f *.o

@@ -14,6 +14,12 @@
 #include "strings.h"
 #include "strsearch.h"
 
+#ifdef EOP
+    #define PRINTING 1
+#else
+    #define PRINTING 0
+#endif
+
 /**
     Initializes the prefix table, containing the shift factors for
     the substring when comparing in the superstring to find
@@ -56,6 +62,13 @@ static void buildPrefixTable( String const* subs, int* arr )
         // at the later index in the table to zero
         else if ( bi == 0 )
             arr[ i ] = 0;
+    }
+
+    if ( PRINTING ) {
+        printf( "[substring/strsearch] table: \n" );
+
+        for ( int i = 0; i < subs->len; i++ )
+            printf( "\t0x%x\t\'%c\'\t%d\n", subs->bytes[ i ], subs->bytes[ i ], arr[ i ] );
     }
 }
 
