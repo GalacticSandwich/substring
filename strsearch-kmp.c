@@ -17,13 +17,13 @@
 /**
     Initializes the prefix table, containing the shift factors for
     the substring when comparing in the superstring to find
-    matches.
+    matches. The size of the integer array passed must be equal to
+    the length of the substring being used to generate the table.
 
     @param subs the substring to use in the generation of the table
     @param arr the integer array to populate with shift values
-    @param len the length of the substring/integer array
 */
-static void buildPrefixTable( String const* subs, int* arr, int len )
+static void buildPrefixTable( String const* subs, int* arr )
 {
     // the first prefix value is always zero
     arr[ 0 ] = 0;
@@ -37,7 +37,7 @@ static void buildPrefixTable( String const* subs, int* arr, int len )
     // cycle through the substring, examine mutual circumfixes leading up to
     // the end of the substring, and update the prefix table values as
     // you go along
-    for ( int i = 1; i < len; i++ ) {
+    for ( int i = 1; i < subs->len; i++ ) {
         // if the bytes at the two positions match, increment the
         // earlier index and assign that to the table position at
         // the later index
@@ -61,7 +61,6 @@ static void buildPrefixTable( String const* subs, int* arr, int len )
 
 int findSubstring( String const* str, String const* subs, int pos )
 {
-
     // fetch the string and substring lengths
     int slen = str->len;
     int sslen = subs->len;
@@ -71,12 +70,12 @@ int findSubstring( String const* str, String const* subs, int pos )
 
     /* Section 1: Build Prefix Table */
 
-    buildPrefixTable( subs, pvals, sslen ); // see comments in the above helper function
+    buildPrefixTable( subs, pvals ); // see comments in the above helper function
 
     /* Section 2: Conduct KMP Algorithm */
 
     // initialize values to go through the haystack (i) and the needle (j) respectively
-    int i = 0;
+    int i = pos;
     int j = 0;
 
     // loop through both strings and search to see if the substring pattern is found

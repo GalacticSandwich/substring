@@ -8,9 +8,31 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "strings.h"
 #include "strsearch.h"
+
+/**
+    An enum type to define the operations which the driver application
+    will be capable of performing.
+
+    OP_NOTHING: nothing at all, represents a null action
+
+    OP_USAGE:   output the proper usages of the program
+
+    OP_SEARCH:  search for the first instance of the substring in the superstring, and output the
+                index at which it occurs
+
+    OP_SEARCHALL:   search for all occurrences of the substring in the superstring, and output the
+                    indices at which they occur
+*/
+typedef enum {
+    OP_NOTHING = 0x00,
+    OP_USAGE = 0x01,
+    OP_SEARCH = 0x02,
+    OP_SEARCHALL = 0x03
+} task_t;
 
 /**
     Reads a file using a provided filename into a heap-allocated string, then
@@ -49,17 +71,16 @@ static char* readFile( char const* fileName ) {
     return data;
 }
 
-// static int evalArgs( int numArgs, char** argArr, unsigned char* flags ) {
-
-// }
-
 /**
     Prints out the template for program usage
 
     @param progName the name of the program to display
 */
 static void usage( char const* progName ) {
-    printf( "usage: %s <file> <string>\n", progName );
+    printf( "[substring] usage: \n" );
+    printf( "\t%s usage\n", progName );
+    printf( "\t%s search <file> <string>\n", progName );
+    printf( "\t%s searchall <file> <string>\n", progName );
 }
 
 /**
@@ -73,31 +94,93 @@ static void usage( char const* progName ) {
 */
 int main( int argc, char** argv )
 {
-    if ( argc < 3 ) {
-        usage( argv[ 0 ] );
-        return EXIT_FAILURE;
+    // the operation to perform by the driver program
+    task_t operation = OP_NOTHING;
+
+    if ( !strcmp( "search", argv[ 1 ] ) ) {
+        if ( argc != 4 ) {
+            usage( argv[ 0 ] );
+            exit( EXIT_FAILURE );
+        }
+
+        operation = OP_SEARCH;
+    }
+    else if ( !strcmp( "searchall", argv[ 1 ] ) ) {
+        if ( argc != 4 ) {
+            usage( argv[ 0 ] );
+            exit( EXIT_FAILURE );
+        }
+        
+        operation = OP_SEARCHALL;
+    }
+    else if ( !strcmp( "usage", argv[ 1 ] ) ) {
+        if ( argc != 2 ) {
+            usage( argv[ 0 ] );
+            exit( EXIT_FAILURE );
+        }
+        
+        operation = OP_USAGE;
+    }
+    else {
+        fprintf( stderr, "[substring] error: Invalid Command \"%s\"", argv[ 1 ] );
+        exit( EXIT_FAILURE );
     }
 
-    // read in the input file
-    char* data = readFile( argv[ 1 ] );
+    if ( operation == OP_NOTHING ) {
+        printf( "[substring] (nothing)\n" );
+        exit( EXIT_SUCCESS );
+    }
+    else if ( operation == OP_USAGE ) {
+        usage( argv[ 0 ] );
+        exit( EXIT_SUCCESS );
+    }
+    else {
+        // read in the input file
+        char* data = readFile( argv[ 2 ] );
 
-    // construct a string for the text and pattern using the created text string
-    // and the word to search for passed in through the command line
-    String* haystack = makeString( data );
-    String* needle = makeString( argv[ 2 ] );
-    free( data );
+        // construct a string for the text and pattern using the created text string
+        // and the word to search for passed in through the command line
+        String* haystack = makeString( data );
+        String* needle = makeString( argv[ 3 ] );
 
-    // perform a substring search
-    int pos = findSubstring( haystack, needle, 0 );
+        // if the operation is not the usage display, check to see if the user has
+        // prompted a search or searchall
+        if ( operation == OP_SEARCH ) {
+            // perform a substring search
+            int pos = findSubstring( haystack, needle, 0 );
 
-    // free the two strings made after we're done using them
-    freeString( haystack );
-    freeString( needle );
+            // output the index of the first instance of the substring in the text read in, or
+            // an appropriate message if no such instance exists
+            if ( pos == -1 ) {
+                printf( "[substring] search: No substrings found in %s\n", argv[ 2 ] );
+            }
+            else {
+                printf( "[substring] search: Substring found in %s at index %d\n", argv[ 2 ], pos );
+            }
+        }
+        else if ( operation == OP_SEARCHALL ) {
+            int pos = findSubstring( haystack, needle, 0 );
 
-    // output the index of the first instance of the substring in the text read in, or
-    // -1 if no such instance exists
-    printf( "%d\n", pos );
+            if ( pos == -1 ) {
+                printf( "[substring] searchall: No substrings found in %s\n", argv[ 2 ] );
+            }
+            else {
+                printf( "[substring] searchall: Substring found in %s at index %d\n", argv[ 2 ], pos );
 
-    // exit the program
-    return EXIT_SUCCESS;
+                while ( ( pos = findSubstring( haystack, needle, pos + 1 ) ) != -1 ) {
+                    printf( "[substring] searchall: Substring found in %s at index %d\n", argv[ 2 ], pos );
+                }
+            }
+        }
+
+        // free the two strings made after we're done using them
+        freeString( haystack );
+        freeString( needle );
+
+        // free the string associated with the original data read in
+        free( data );
+
+        // exit the program
+        return EXIT_SUCCESS;
+    }
 }

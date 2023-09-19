@@ -21,13 +21,13 @@ String* makeString( char const* lit )
     String* str = ( String* ) malloc( sizeof( String ) );
 
     if ( str == NULL )
-        fprintf( stderr, "Error: could not allocate string memory!" );
+        fprintf( stderr, "[substring/strings] error: Could not allocate string memory!\n" );
 
     // allocate heap memory for the array of bytes which will comprise the string
     str->bytes = ( char* ) malloc( len * sizeof( char ) );
 
     if ( str->bytes == NULL )
-        fprintf( stderr, "Error: could not allocate byte array memory!");
+        fprintf( stderr, "[substring/strings] error: Could not allocate byte array memory!\n" );
 
     // use memcpy() to copy the correct number of bytes over to the byte array
     // from the literal passed
