@@ -31,9 +31,5 @@ int findSubstring( String const* str, String const* subs, int pos, int const* va
     if ( socc == NULL )
         return -1;
 
-    for ( int i = 0; i < str->len; i++ )
-        if ( socc == str->bytes + i )
-            return i;
-
-    return -1;
+    return ( int ) ( socc - str->bytes );
 }
