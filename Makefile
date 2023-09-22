@@ -1,7 +1,7 @@
 
 CC := gcc
 CFLAGS := -std=c99 -Wall -O2
-OFLAGS := -g
+OFLAGS := -g -DEOP
 
 all: subs-kmp clean
 

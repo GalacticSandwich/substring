@@ -14,25 +14,15 @@
 #include "strings.h"
 #include "strsearch.h"
 
-#ifdef EOP
-    #define PRINTING 1
-#else
-    #define PRINTING 0
-#endif
-
 /**
     Initializes the prefix table, containing the shift factors for
     the substring when comparing in the superstring to find
-    matches. The size of the integer array passed must be equal to
-    the length of the substring being used to generate the table.
-
-    @param subs the substring to use in the generation of the table
-    @param arr the integer array to populate with shift values
+    matches.
 */
-static void buildPrefixTable( String const* subs, int* arr )
+void preprocess( String const* subs, int* varr )
 {
     // the first prefix value is always zero
-    arr[ 0 ] = 0;
+    varr[ 0 ] = 0;
 
     // initialize a variable for the start of the substring to
     // examine potential mutual circumfixes, while using the iterator
@@ -48,42 +38,35 @@ static void buildPrefixTable( String const* subs, int* arr )
         // earlier index and assign that to the table position at
         // the later index
         if ( subs->bytes[ bi ] == subs->bytes[ i ] )
-            arr[ i ] = ++bi;
+            varr[ i ] = ++bi;
         
         // if they don't match, but the earlier index is not zero, update
         // the earlier index to whatever is at it's position minus one, and
         // decrement the later index to keep it where it is for the next iteration
         else if ( bi > 0 ) {
-            bi = arr[ bi - 1 ];
+            bi = varr[ bi - 1 ];
             i--;
         }
 
         // if they don't match, and the earlier index is zero, set the value
         // at the later index in the table to zero
         else if ( bi == 0 )
-            arr[ i ] = 0;
+            varr[ i ] = 0;
     }
 
     if ( PRINTING ) {
         printf( "[substring/strsearch] table: \n" );
 
         for ( int i = 0; i < subs->len; i++ )
-            printf( "\t0x%x\t\'%c\'\t%d\n", subs->bytes[ i ], subs->bytes[ i ], arr[ i ] );
+            printf( "\t0x%x\t\'%c\'\t%d\n", subs->bytes[ i ], subs->bytes[ i ], varr[ i ] );
     }
 }
 
-int findSubstring( String const* str, String const* subs, int pos )
+int findSubstring( String const* str, String const* subs, int pos, int const* varr )
 {
     // fetch the string and substring lengths
     int slen = str->len;
     int sslen = subs->len;
-
-    // initialize an array to hold prefix table values for the substring
-    int pvals[ sslen ];
-
-    /* Section 1: Build Prefix Table */
-
-    buildPrefixTable( subs, pvals ); // see comments in the above helper function
 
     /* Section 2: Conduct KMP Algorithm */
 
@@ -113,7 +96,7 @@ int findSubstring( String const* str, String const* subs, int pos )
             // if the substring's end has not been reached, set the substring index
             // to its new proper value in the prefix table, if it isn't currently zero
             if ( j )
-                j = pvals[ j - 1 ];
+                j = varr[ j - 1 ];
 
             // if the substring index is zero, just increment the superstring index
             else

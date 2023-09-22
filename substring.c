@@ -143,11 +143,15 @@ int main( int argc, char** argv )
         String* haystack = makeString( data );
         String* needle = makeString( argv[ 3 ] );
 
+        // initialize the value table with appropriate algorithms that need to use it
+        int varr[ needle->len ];
+        preprocess( needle, varr );
+
         // if the operation is not the usage display, check to see if the user has
         // prompted a search or searchall
         if ( operation == OP_SEARCH ) {
             // perform a substring search
-            int pos = findSubstring( haystack, needle, 0 );
+            int pos = findSubstring( haystack, needle, 0, varr );
 
             // output the index of the first instance of the substring in the text read in, or
             // an appropriate message if no such instance exists
@@ -159,8 +163,10 @@ int main( int argc, char** argv )
             }
         }
         else if ( operation == OP_SEARCHALL ) {
+            // track the number of substrings found
+            int n = 0;
             // perform a substring search
-            int pos = findSubstring( haystack, needle, 0 );
+            int pos = findSubstring( haystack, needle, 0, varr );
 
             // output the index of the first instance of the substring in the text read in, or
             // an appropriate message if no such instance exists
@@ -168,13 +174,17 @@ int main( int argc, char** argv )
                 printf( "[substring] searchall: No substrings found in %s\n", argv[ 2 ] );
             }
             else {
+                n++;
                 printf( "[substring] searchall: Substring found in %s at index %d\n", argv[ 2 ], pos );
 
                 // search for more substrings if they exist
-                while ( ( pos = findSubstring( haystack, needle, pos + 1 ) ) != -1 ) {
+                while ( ( pos = findSubstring( haystack, needle, pos + 1, varr ) ) != -1 ) {
+                    n++;
                     printf( "[substring] searchall: Substring found in %s at index %d\n", argv[ 2 ], pos );
                 }
             }
+
+            printf( "[substring] searchall: Total substrings found in %s: %d\n", argv[ 2 ], n );
         }
 
         // free the two strings made after we're done using them
