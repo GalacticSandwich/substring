@@ -1,6 +1,4 @@
 *.o
 subs-kmp
-subs-bm
 subs-rk
-*.txt
-strsearch-strstr.c
+subs-strstr

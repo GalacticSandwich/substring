@@ -24,14 +24,14 @@ String* makeString( char const* lit )
         fprintf( stderr, "[substring/strings] error: Could not allocate string memory!\n" );
 
     // allocate heap memory for the array of bytes which will comprise the string
-    str->bytes = ( char* ) malloc( len * sizeof( char ) );
+    str->bytes = ( char* ) malloc( ( len + 1 ) * sizeof( char ) );
 
     if ( str->bytes == NULL )
         fprintf( stderr, "[substring/strings] error: Could not allocate byte array memory!\n" );
 
     // use memcpy() to copy the correct number of bytes over to the byte array
     // from the literal passed
-    memcpy( str->bytes, lit, len );
+    memcpy( str->bytes, lit, len + 1 );
 
     // set the byte length in the String struct
     str->len = len;
@@ -46,4 +46,16 @@ void freeString( String* str )
     // associated with the byte array, along with the actual String struct itself
     free( str->bytes );
     free( str );
+}
+
+void outString( String const* str )
+{
+    for ( int i = 0; i < str->len; i++ )
+        putchar( str->bytes[ i ] );
+}
+
+void outStringLn( String const* str )
+{
+    outString( str );
+    putchar( '\n' );
 }

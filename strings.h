@@ -37,4 +37,19 @@ String* makeString( char const* lit );
 */
 void freeString( String* str );
 
+/**
+    Prints the byte content of a String to stdout.
+
+    @param str the String to print
+*/
+void outString( String const* str );
+
+/**
+    Prints the byte content of a String to stdout with a
+    terminating newline.
+
+    @param str the String to print
+*/
+void outStringLn( String const* str );
+
 #endif
