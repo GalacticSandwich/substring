@@ -11,6 +11,8 @@
 
 #include "strings.h"
 
+// check to see if the EOP constant has been defined, and if it has
+// set the flag for debug printing to true, or false otherwise
 #ifdef EOP
     #define PRINTING 1
 #else

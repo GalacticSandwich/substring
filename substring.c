@@ -47,7 +47,7 @@ static char* readFile( char const* fileName ) {
     FILE* file = fopen( fileName, "r" );
 
     if ( file == NULL ) {
-        fprintf( stderr, "Error: Invalid file!\n" );
+        fprintf( stderr, "[substring] error: Invalid filename\n" );
         exit( EXIT_FAILURE );
     }
 
@@ -97,8 +97,16 @@ int main( int argc, char** argv )
     // the operation to perform by the driver program
     task_t operation = OP_NOTHING;
 
+    if ( argc == 1 ) {
+        fprintf( stderr, "[substring] error: No arguments provided\n" );
+        usage( argv[ 0 ] );
+        exit( EXIT_FAILURE );
+    }
+
+
     if ( !strcmp( "search", argv[ 1 ] ) ) {
         if ( argc != 4 ) {
+            fprintf( stderr, "[substring] error: Insufficient arguments provided\n" );
             usage( argv[ 0 ] );
             exit( EXIT_FAILURE );
         }
@@ -107,6 +115,7 @@ int main( int argc, char** argv )
     }
     else if ( !strcmp( "searchall", argv[ 1 ] ) ) {
         if ( argc != 4 ) {
+            fprintf( stderr, "[substring] error: Insufficient arguments provided\n" );
             usage( argv[ 0 ] );
             exit( EXIT_FAILURE );
         }
@@ -115,6 +124,7 @@ int main( int argc, char** argv )
     }
     else if ( !strcmp( "usage", argv[ 1 ] ) ) {
         if ( argc != 2 ) {
+            fprintf( stderr, "[substring] error: Redundant arguments provided\n" );
             usage( argv[ 0 ] );
             exit( EXIT_FAILURE );
         }
@@ -123,6 +133,7 @@ int main( int argc, char** argv )
     }
     else {
         fprintf( stderr, "[substring] error: Invalid Command \"%s\"\n", argv[ 1 ] );
+        usage( argv[ 0 ] );
         exit( EXIT_FAILURE );
     }
 
