@@ -49,7 +49,7 @@ void preprocess( String const* subs, int* varr )
         }
 
         // if they don't match, and the earlier index is zero, set the value
-        // at the later index in the table to zero
+        // at the later index in the table to zero.
         else if ( bi == 0 )
             varr[ i ] = 0;
     }

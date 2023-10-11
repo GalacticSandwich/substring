@@ -1,4 +1,2 @@
-*.o
-subs-kmp
-subs-rk
-subs-strstr
+objects/*
+bin/*
