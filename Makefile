@@ -15,14 +15,22 @@ endif
 
 KMP_OBJS := $(OBJ_DIR)/substring.o $(OBJ_DIR)/strsearch-kmp.o $(OBJ_DIR)/strings.o
 STRSTR_OBJS := $(OBJ_DIR)/substring.o $(OBJ_DIR)/strsearch-strstr.o $(OBJ_DIR)/strings.o
+RK_CH_OBJS := $(OBJ_DIR)/substring.o $(OBJ_DIR)/strsearch-rk-ch.o $(OBJ_DIR)/strings.o
+RK_CH_KMP_OBJS := $(OBJ_DIR)/substring.o $(OBJ_DIR)/strsearch-rk-ch-kmp.o $(OBJ_DIR)/strings.o
 
-all: $(BIN_DIR)/subs-kmp $(BIN_DIR)/subs-strstr
+all: $(BIN_DIR)/subs-kmp $(BIN_DIR)/subs-strstr $(BIN_DIR)/subs-rk-ch $(BIN_DIR)/subs-rk-ch-kmp
 
 $(BIN_DIR)/subs-kmp: $(KMP_OBJS)
 	$(CC) $(CFLAGS) $(KMP_OBJS) -o $@
 
 $(BIN_DIR)/subs-strstr: $(STRSTR_OBJS)
 	$(CC) $(CFLAGS) $(STRSTR_OBJS) -o $@
+
+$(BIN_DIR)/subs-rk-ch: $(RK_CH_OBJS)
+	$(CC) $(CFLAGS) $(RK_CH_OBJS) -o $@
+
+$(BIN_DIR)/subs-rk-ch-kmp: $(RK_CH_KMP_OBJS)
+	$(CC) $(CFLAGS) $(RK_CH_KMP_OBJS) -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) -I $(INC_DIR) $(CFLAGS) $(OFLAGS) -o $@ $^ -c

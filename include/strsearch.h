@@ -9,15 +9,8 @@
 #ifndef STRSEARCH_H
 #define STRSEARCH_H
 
+#include "common.h"
 #include "strings.h"
-
-// check to see if the EOP constant has been defined, and if it has
-// set the flag for debug printing to true, or false otherwise
-#ifdef _VERBOSE
-    #define PRINTING 1
-#else
-    #define PRINTING 0
-#endif
 
 /**
     Some string searching algorithms require the usage of a table of values that
