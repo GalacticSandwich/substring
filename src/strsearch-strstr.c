@@ -3,8 +3,8 @@
     @author Aaron N. (GalacticSandwich)
 
     Contains a definition for substring searches, defined using the
-    C Language standard library function strstr(), which uses a version the two-way algorithm
-    to perform substring searches.
+    C Language standard library function strstr(), which uses an optimized approach
+    similar in characteristic to KMP to perform substring searches.
 */
 
 #include <stdio.h>

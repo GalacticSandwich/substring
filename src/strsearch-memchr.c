@@ -1,3 +1,11 @@
+/**
+    @file strsearch-memchr.c
+    @author Aaron N. (GalacticSandwich)
+
+    Contains a definition for string searches, defined using the
+    C Standard Library Function memchr() in combination with a bruteforce
+    approach of the substring length upon any character matches.
+*/
 
 #include <stdio.h>
 #include <stdlib.h>

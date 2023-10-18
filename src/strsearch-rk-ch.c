@@ -1,3 +1,17 @@
+/**
+    @file strsearch-rk-ch.c
+    @author Aaron N. (GalacticSandwich)
+
+    Contains a definition for string searches, defined
+    using the Rabin-Karp Algorithm, which uses hashing on
+    sections of the superstring that are the same length
+    as the substring, and performs a bruteforce comparison 
+    if the section hash matches that of the substring.
+
+    The hashing function used in this implementation is a simple
+    additive hash based on the ascii values and positions of each character,
+    which are then added and then modulo'd by some prime number.
+*/
 
 #include <stdio.h>
 #include <stdlib.h>

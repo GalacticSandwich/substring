@@ -8,7 +8,7 @@ CC := gcc
 CFLAGS := -std=c99 -Wall -O2
 
 ifeq ($(DEBUG),1)
-	OFLAGS := -g -D_VERBOSE
+	OFLAGS := -g -D_PRINTING
 else
 	OFLAGS := -g
 endif
