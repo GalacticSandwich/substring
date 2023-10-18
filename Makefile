@@ -17,8 +17,11 @@ KMP_OBJS := $(OBJ_DIR)/substring.o $(OBJ_DIR)/strsearch-kmp.o $(OBJ_DIR)/strings
 STRSTR_OBJS := $(OBJ_DIR)/substring.o $(OBJ_DIR)/strsearch-strstr.o $(OBJ_DIR)/strings.o
 RK_CH_OBJS := $(OBJ_DIR)/substring.o $(OBJ_DIR)/strsearch-rk-ch.o $(OBJ_DIR)/strings.o
 RK_CH_KMP_OBJS := $(OBJ_DIR)/substring.o $(OBJ_DIR)/strsearch-rk-ch-kmp.o $(OBJ_DIR)/strings.o
+RK_RF_OBJS := $(OBJ_DIR)/substring.o $(OBJ_DIR)/strsearch-rk-rf.o $(OBJ_DIR)/strings.o
+RK_RF_KMP_OBJS := $(OBJ_DIR)/substring.o $(OBJ_DIR)/strsearch-rk-rf-kmp.o $(OBJ_DIR)/strings.o
 
-all: $(BIN_DIR)/subs-kmp $(BIN_DIR)/subs-strstr $(BIN_DIR)/subs-rk-ch $(BIN_DIR)/subs-rk-ch-kmp
+all: $(BIN_DIR)/subs-kmp $(BIN_DIR)/subs-strstr $(BIN_DIR)/subs-rk-ch $(BIN_DIR)/subs-rk-ch-kmp \
+$(BIN_DIR)/subs-rk-rf $(BIN_DIR)/subs-rk-rf-kmp
 
 $(BIN_DIR)/subs-kmp: $(KMP_OBJS)
 	$(CC) $(CFLAGS) $(KMP_OBJS) -o $@
@@ -31,6 +34,12 @@ $(BIN_DIR)/subs-rk-ch: $(RK_CH_OBJS)
 
 $(BIN_DIR)/subs-rk-ch-kmp: $(RK_CH_KMP_OBJS)
 	$(CC) $(CFLAGS) $(RK_CH_KMP_OBJS) -o $@
+
+$(BIN_DIR)/subs-rk-rf: $(RK_RF_OBJS)
+	$(CC) $(CFLAGS) $(RK_RF_OBJS) -o $@
+
+$(BIN_DIR)/subs-rk-rf-kmp: $(RK_RF_KMP_OBJS)
+	$(CC) $(CFLAGS) $(RK_RF_KMP_OBJS) -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) -I $(INC_DIR) $(CFLAGS) $(OFLAGS) -o $@ $^ -c
