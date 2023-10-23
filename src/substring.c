@@ -81,14 +81,11 @@ static char* readFile( char const* fileName ) {
 */
 static void usage( char const* progName ) {
     printf( "[substring] usage: \n" );
-    printf( "\t%s usage\n", progName );
-    printf( "\t\t :: output program usages\n" );
+    printf( "\t%s usage\n", progName );;
     printf( "\t%s <flags> search <file> <string>\n", progName );
-    printf( "\t\t :: search for the first instance of <string> in <file>\n" );
     printf( "\t%s <flags> searchall <file> <string>\n", progName );
-    printf( "\t\t :: search for all instances of <string> in <file>\n" );
     printf( "[substring] flags: \n" );
-    printf( "\t-i <reps> \t :: repeat an operation <reps> times.\n" );
+    printf( "\t-i <reps> \t repeat an operation <reps> times.\n" );
 }
 
 static int evalFlags( int argc, char** argv ) {
@@ -101,7 +98,7 @@ static int evalFlags( int argc, char** argv ) {
                     reps = strtol( argv[ i + 1 ], NULL, 10 );
 
                     if ( PRINTING ) {
-                        printf( "[substring] flags: iteration value parsed - %ld\n", reps );
+                        printf( "[substring] flags: Iteration value parsed - %ld\n", reps );
                     }
 
                     if ( reps < 0 ) {
